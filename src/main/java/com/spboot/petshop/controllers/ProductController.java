@@ -13,7 +13,6 @@ import com.spboot.petshop.models.Supplier;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import static oracle.jrockit.jfr.events.Bits.intValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -61,7 +60,8 @@ public class ProductController {
     }
 
     @PostMapping("/product/prostore")
-    public String prostore(@ModelAttribute("product") Product product, RedirectAttributes ra, HttpServletRequest request) throws Exception{
+    public String prostore(@ModelAttribute("product") Product product, RedirectAttributes ra, 
+            HttpServletRequest request) throws Exception{
         HttpSession session = request.getSession(true);
         
         Admin admin = new Admin();
@@ -74,12 +74,12 @@ public class ProductController {
             return "redirect:/product/procreate";
         }
         
-        if (product.getStock().equals(null)) {
+        if (product.getStock()==null) {
             ra.addFlashAttribute("danger", "Stock cannot be null!");
             return "redirect:/product/procreate";
         }
         
-        if (product.getPrice().equals(null)) {
+        if (product.getPrice()==null) {
             ra.addFlashAttribute("danger", "Price cannot be null!");
             return "redirect:/product/procreate";
         }
@@ -88,15 +88,12 @@ public class ProductController {
             ra.addFlashAttribute("danger", "Description cannot be null!");
             return "redirect:/product/procreate";
         }
-        
-        if (product.getExpired().equals("")) {
-            ra.addFlashAttribute("danger", "Expired cannot be null!");
-            return "redirect:/product/procreate";
-        }
 
         productInterface.prostore(product);
+        
         System.out.println(product.getStock());
         System.out.println(product.getPrice());
+        
         return "redirect:/product";
     }
 

@@ -173,9 +173,9 @@ public class WebMvcCustomerTests {
                 .sessionAttrs(sessionattr))
                 .andExpect(status().isOk());
 
-        String telephone1 = "";
-        String telephone2 = "";
-        String address = "";
+        String telephone1 = "0812345678";
+        String telephone2 = "08645678";
+        String address = "Jl.Kita No.1";
 
         Customer customer = new Customer();
 
@@ -189,7 +189,12 @@ public class WebMvcCustomerTests {
                 .flashAttr("customer", customer))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/customer/cuscreate"))
-                .andDo(print());
+                .andDo(print())
+                .andExpect(
+                        MockMvcResultMatchers
+                            .flash()
+                            .attribute("danger", "Name cannot be null!")
+                );
     }
     
     @Test
@@ -232,9 +237,9 @@ public class WebMvcCustomerTests {
                 .sessionAttrs(sessionattr))
                 .andExpect(status().isOk());
 
-        String name = "";
-        String telephone2 = "";
-        String address = "";
+        String name = "Kita";
+        String telephone2 = "08645678";
+        String address = "Jl.Kita No.1";
 
         Customer customer = new Customer();
 
@@ -248,66 +253,12 @@ public class WebMvcCustomerTests {
                 .flashAttr("customer", customer))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/customer/cuscreate"))
-                .andDo(print());
-    }
-    
-    @Test
-    public void testCuscreateCustomerWithoutTelephone2() throws Exception {
-
-        String email = RandomString.make(20).toLowerCase() + "@gmail.com";
-        String password = RandomString.make(20).toLowerCase();
-
-        Admin admin = new Admin();
-        admin.setName("Kita");
-        admin.setEmail(email);
-        admin.setPassword(password);
-
-        mockMvc.perform(post("/register")
-                .flashAttr("admin", admin))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(MockMvcResultMatchers.redirectedUrl("/login"));
-
-        Admin adminLogin = new Admin();
-        adminLogin.setEmail(email);
-        adminLogin.setPassword(password);
-
-        mockMvc.perform(post("/login")
-                .flashAttr("admin", adminLogin))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(MockMvcResultMatchers.redirectedUrl("/"));
-
-        HashMap<String, Object> sessionattr = new HashMap<String, Object>();
-
-        sessionattr.put("id", admin.getId());
-        sessionattr.put("name", admin.getName());
-        sessionattr.put("email", admin.getEmail());
-        sessionattr.put("loggedIn", true);
-
-        mockMvc.perform(get("/")
-                .sessionAttrs(sessionattr))
-                .andExpect(status().isOk());
-
-        mockMvc.perform(get("/customer/cuscreate")
-                .sessionAttrs(sessionattr))
-                .andExpect(status().isOk());
-
-        String name = "";
-        String telephone1 = "";
-        String address = "";
-
-        Customer customer = new Customer();
-
-        customer.setName(name);
-        customer.setTelephone1(telephone1);
-        customer.setTelephone2("");
-        customer.setAddress(address);
-        
-        mockMvc.perform(post("/customer/cusstore")
-                .sessionAttrs(sessionattr)
-                .flashAttr("customer", customer))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(MockMvcResultMatchers.redirectedUrl("/customer/cuscreate"))
-                .andDo(print());
+                .andDo(print())
+                .andExpect(
+                        MockMvcResultMatchers
+                        .flash()
+                        .attribute("danger", "Telephone1 cannot be null!")
+                );
     }
     
     @Test
@@ -350,9 +301,9 @@ public class WebMvcCustomerTests {
                 .sessionAttrs(sessionattr))
                 .andExpect(status().isOk());
 
-        String name = "";
-        String telephone1 = "";
-        String telephone2 = "";
+        String name = "Kita";
+        String telephone1 = "0812345678";
+        String telephone2 = "08645678";
 
         Customer customer = new Customer();
 
@@ -366,6 +317,11 @@ public class WebMvcCustomerTests {
                 .flashAttr("customer", customer))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/customer/cuscreate"))
-                .andDo(print());
+                .andDo(print())
+                .andExpect(
+                        MockMvcResultMatchers
+                        .flash()
+                        .attribute("danger", "Address cannot be null!")
+                );
     }
 }

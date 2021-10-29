@@ -8,12 +8,8 @@ package com.spboot.petshop.controllers;
 import com.spboot.petshop.interfaces.CustomerInterface;
 import com.spboot.petshop.interfaces.ProductInterface;
 import com.spboot.petshop.interfaces.TransactionInterface;
-import com.spboot.petshop.interfaces.ProductInterface;
-import com.spboot.petshop.interfaces.TransactionInterface;
 import com.spboot.petshop.models.Admin;
 import com.spboot.petshop.models.Customer;
-import com.spboot.petshop.models.Product;
-import com.spboot.petshop.models.Transaction;
 import com.spboot.petshop.models.Product;
 import com.spboot.petshop.models.Transaction;
 import java.util.List;
@@ -26,10 +22,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
- * @author BesariMaliik
+ * @author BesariMaliik, Sofia
  */
 @Controller
 public class TransactionController {
@@ -69,7 +66,8 @@ public class TransactionController {
     }
 
     @PostMapping("/transaction/trastore")
-    public String trastore(@ModelAttribute("transaction") Transaction transaction, HttpServletRequest request) {
+    public String trastore(@ModelAttribute("transaction") Transaction transaction, RedirectAttributes ra,
+            HttpServletRequest request) throws Exception {
         HttpSession session = request.getSession(true);
         
         Admin admin = new Admin();
@@ -77,7 +75,13 @@ public class TransactionController {
         
         transaction.setAdmin(admin);
 
+        if (transaction.getQuantity()==null) {
+            ra.addFlashAttribute("danger", "Quantity cannot be null!");
+            return "redirect:/transaction/tracreate";
+        }
+
         transactionInterface.trastore(transaction);
+        System.out.println(transaction.getPrice());
         System.out.println(transaction.getTotal());       
         return "redirect:/transaction";
     }

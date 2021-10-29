@@ -6,10 +6,7 @@
 package com.spboot.petshop.services;
 
 import com.spboot.petshop.interfaces.TransactionInterface;
-import com.spboot.petshop.interfaces.TransactionInterface;
 import com.spboot.petshop.models.Transaction;
-import com.spboot.petshop.models.Transaction;
-import com.spboot.petshop.repositories.TransactionRepository;
 import com.spboot.petshop.repositories.TransactionRepository;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +29,7 @@ public class TransactionService implements TransactionInterface {
 
     @Override
     public void trastore(Transaction transaction) {
+        System.out.println("HERE -> "+transaction.getPrice());
         System.out.println("HERE -> "+transaction.getTotal());
         this.transactionRepository.save(transaction);
     }

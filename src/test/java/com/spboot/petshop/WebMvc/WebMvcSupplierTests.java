@@ -7,8 +7,6 @@ package com.spboot.petshop.WebMvc;
 
 import com.spboot.petshop.models.Admin;
 import com.spboot.petshop.models.Supplier;
-import com.spboot.petshop.repositories.SupplierRepository;
-import com.spboot.petshop.services.SupplierService;
 import java.util.HashMap;
 import net.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.Test;
@@ -16,7 +14,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -133,7 +130,7 @@ public class WebMvcSupplierTests {
     }
 
     @Test
-    public void testSupreateSupplierWithoutName() throws Exception {
+    public void testSupcreateSupplierWithoutName() throws Exception {
 
         String email = RandomString.make(20).toLowerCase() + "@gmail.com";
         String password = RandomString.make(20).toLowerCase();
@@ -173,8 +170,8 @@ public class WebMvcSupplierTests {
                 .andExpect(status().isOk());
 
         String name;
-        String telephone="";
-        String address = "";
+        String telephone="0813567";
+        String address = "Jl.Coba No.0";
 
         Supplier supplier = new Supplier();
 
@@ -187,7 +184,12 @@ public class WebMvcSupplierTests {
                 .flashAttr("supplier", supplier))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/supplier/supcreate"))
-                .andDo(print());
+                .andDo(print())
+                .andExpect(
+                        MockMvcResultMatchers
+                            .flash()
+                            .attribute("danger", "Name cannot be null!")
+                );
     }
 
     @Test
@@ -230,8 +232,8 @@ public class WebMvcSupplierTests {
                 .sessionAttrs(sessionattr))
                 .andExpect(status().isOk());
         
-        String name = "";
-        String address = "";
+        String name = "PT Coba";
+        String address = "Jl.Coba No.0";
 
         Supplier supplier = new Supplier();
         supplier.setName(name);
@@ -243,7 +245,12 @@ public class WebMvcSupplierTests {
                 .flashAttr("supplier", supplier))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/supplier/supcreate"))
-                .andDo(print());
+                .andDo(print())
+                .andExpect(
+                        MockMvcResultMatchers
+                            .flash()
+                            .attribute("danger", "Telephone cannot be null!")
+                );
     }
     
     @Test
@@ -286,8 +293,8 @@ public class WebMvcSupplierTests {
                 .sessionAttrs(sessionattr))
                 .andExpect(status().isOk());
         
-        String name = "";
-        String telephone = "";
+        String name = "PT Coba";
+        String telephone = "0813567";
         
         Supplier supplier = new Supplier();
         supplier.setName(name);
@@ -299,7 +306,12 @@ public class WebMvcSupplierTests {
                 .flashAttr("supplier", supplier))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/supplier/supcreate"))
-                .andDo(print());
+                .andDo(print())
+                .andExpect(
+                        MockMvcResultMatchers
+                            .flash()
+                            .attribute("danger", "Address cannot be null!")
+                );
     }
 
 }

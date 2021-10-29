@@ -5,8 +5,6 @@
  */
 package com.spboot.petshop.models;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,12 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
  *
- * @author ACER
+ * @author BesariMaliik, Sofia
  */
 @Entity
 @Table(name = "tbtransaction")
@@ -35,6 +32,9 @@ public class Transaction {
 
     @Column(name = "quantity")
     private Integer quantity;
+    
+    @Column(name = "price")
+    private Integer price;
 
     @Column(name = "total")
     private Integer total;
@@ -46,6 +46,14 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "admin_id")
     private Admin admin;
+    
+    public Integer getPrice() {
+        return price=this.product.getPrice();
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
 
     public Integer getTotal() {
         return total=this.product.getPrice()*this.quantity;

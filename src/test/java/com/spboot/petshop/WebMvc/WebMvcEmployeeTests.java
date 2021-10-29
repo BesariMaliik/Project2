@@ -9,8 +9,6 @@ import com.spboot.petshop.models.Admin;
 import com.spboot.petshop.models.Divisi;
 import com.spboot.petshop.models.Employee;
 import com.spboot.petshop.models.Gender;
-import com.spboot.petshop.repositories.EmployeeRepository;
-import com.spboot.petshop.services.EmployeeService;
 import java.util.HashMap;
 import net.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.Test;
@@ -18,7 +16,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -182,8 +179,8 @@ public class WebMvcEmployeeTests {
                 .sessionAttrs(sessionattr))
                 .andExpect(status().isOk());
 
-        String telephone = "";
-        String address = "";
+        String telephone = "02158754";
+        String address = "Jl.Kita No.1";
         
         Divisi div =  new Divisi();
         div.setId(3);
@@ -203,7 +200,12 @@ public class WebMvcEmployeeTests {
                 .flashAttr("employee", employee))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/employee/empcreate"))
-                .andDo(print());
+                .andDo(print())
+                .andExpect(
+                        MockMvcResultMatchers
+                        .flash()
+                        .attribute("danger", "Name cannot be null!")
+                );
     }
     
     @Test
@@ -246,8 +248,8 @@ public class WebMvcEmployeeTests {
                 .sessionAttrs(sessionattr))
                 .andExpect(status().isOk());
 
-        String name = "";
-        String address = "";
+        String name = "Tebak ya";
+        String address = "Jl.Kita No.1";
         
         Divisi div =  new Divisi();
         div.setId(3);
@@ -267,7 +269,12 @@ public class WebMvcEmployeeTests {
                 .flashAttr("employee", employee))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/employee/empcreate"))
-                .andDo(print());
+                .andDo(print())
+                .andExpect(
+                        MockMvcResultMatchers
+                        .flash()
+                        .attribute("danger", "Telephone cannot be null!")
+                );
 
     }
     
@@ -311,8 +318,8 @@ public class WebMvcEmployeeTests {
                 .sessionAttrs(sessionattr))
                 .andExpect(status().isOk());
 
-        String name = "";
-        String telephone = "";
+        String name = "Tebak ya";
+        String telephone = "02158754";
         
         Divisi div =  new Divisi();
         div.setId(3);
@@ -332,7 +339,12 @@ public class WebMvcEmployeeTests {
                 .flashAttr("employee", employee))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/employee/empcreate"))
-                .andDo(print());
+                .andDo(print())
+                .andExpect(
+                        MockMvcResultMatchers
+                        .flash()
+                        .attribute("danger", "Address cannot be null!")
+                );
 
     }
 }

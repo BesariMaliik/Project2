@@ -45,17 +45,12 @@ public class CustomerController {
     public String cusstore(@ModelAttribute("customer") Customer customer, RedirectAttributes ra) throws Exception{
         
         if (customer.getName().equals("")) {
-            ra.addFlashAttribute("danger", "Name cannot be null!");
+            ra.addFlashAttribute("danger", "Name must more then 3, less than 40, and cannot be null!");
             return "redirect:/customer/cuscreate";
         }
 
         if (customer.getTelephone1().equals("")) {
             ra.addFlashAttribute("danger", "Telephone1 cannot be null!");
-            return "redirect:/customer/cuscreate";
-        }
-        
-        if (customer.getTelephone2().equals("")) {
-            ra.addFlashAttribute("danger", "Telephone2 cannot be null!");
             return "redirect:/customer/cuscreate";
         }
 

@@ -22,16 +22,18 @@ and open the template in the editor.
                             <tr>
                                 <th>Product</th>
                                 <th>Quantity</th>
-                                <th>Customer</th>
+                                <th>Price</th>
                                 <th>Total</th>
+                                <th>Customer</th>
                                 <th>Admin</th>
                                 <th>Action</th>
                             </tr>
                             <tr th:each="transaction : ${transactions}">
                                 <td th:text="${ transaction.product.name }"></td>
                                 <td th:text="${ transaction.quantity }"></td>
-                                <td th:text="${ transaction.customer.name }"></td>
+                                <td th:text="${ transaction.price }"></td>
                                 <td th:text="${ transaction.total }"></td>
+                                <td th:text="${ transaction.customer.name }"></td>
                                 <td th:text="${ transaction.admin.name }"></td>
                                 <td>
                                     <div class="btn-group " role="group " aria-lsabel="Basic example ">

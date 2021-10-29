@@ -6,7 +6,6 @@
 package com.spboot.petshop.controllers;
 
 import com.spboot.petshop.interfaces.SupplierInterface;
-import com.spboot.petshop.models.Admin;
 import com.spboot.petshop.models.Supplier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
